@@ -14,10 +14,10 @@ jobs:
         with:
           python-version: '3.9'
 
-      - name: Setup `ryebot`
+      - name: Setup ryebot
         run: pip install git+https://github.com/mQNwrK/ryebot.git@main
 
-      - name: Run `ryebot`
+      - name: Run ryebot
         run: python3 -m ryebot testscript
         env:
           RYEBOT_USERNAME: ${{ secrets.RYEBOT_WIKIGG_USERNAME }}
