@@ -1,5 +1,5 @@
 name: Run a test
-run-name: testscript \u0023 ${{ github.run_number }}
+run-name: testscript \u0023${{ github.run_number }}
 
 on:
   workflow_dispatch:
