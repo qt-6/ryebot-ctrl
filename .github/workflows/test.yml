@@ -18,7 +18,7 @@ jobs:
         run: pip install git+https://github.com/mQNwrK/ryebot.git@main
 
       - name: Run ryebot
-        run: python3 -m ryebot testscript
+        run: python3 -m ryebot --github testscript
         env:
           RYEBOT_USERNAME: ${{ secrets.RYEBOT_WIKIGG_USERNAME }}
           RYEBOT_PASSWORD: ${{ secrets.RYEBOT_WIKIGG_PASSWORD }}
