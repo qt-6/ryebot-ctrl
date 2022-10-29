@@ -1,0 +1,30 @@
+name: Update Module:Exclusive/data
+run-name: excludata ${{ github.run_id }}
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '5/10 * * * *'  # At every 10th minute from 5 through 59.
+    #- cron: '*/30 * * * *'  # At every 30th minute.
+
+jobs:
+  main:
+    name: Excludata
+    runs-on: ubuntu-latest
+    env:
+      # use the "-v" argument only when running the workflow manually 
+      RYEBOT_DEBUG: ${{ github.event_name == 'workflow_dispatch' && '-v' || ' ' }}
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Setup ryebot
+        run: pip install git+https://github.com/mQNwrK/ryebot.git@main
+
+      - name: Run ryebot
+        run: python3 -m ryebot --github --dryrun $RYEBOT_DEBUG excludata
+        env:
+          RYEBOT_USERNAME: ${{ secrets.RYEBOT_WIKIGG_USERNAME }}
+          RYEBOT_PASSWORD: ${{ secrets.RYEBOT_WIKIGG_PASSWORD }}
