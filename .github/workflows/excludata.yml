@@ -9,7 +9,8 @@ run-name: excludata ${{ github.run_id }}
 #   header: Accept: application/vnd.github+json
 #   header: Authorization: Bearer <PAT>
 #   request method: POST
-# <PAT> is a GitHub Personal Access Token for this repository that only needs the "repo" scope.
+#   request body: {"ref": "main"}
+# <PAT> is a GitHub Personal Access Token for this repository that only needs the "public_repo" scope.
 on: workflow_dispatch
 
 jobs:
