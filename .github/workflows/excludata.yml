@@ -17,9 +17,6 @@ jobs:
   main:
     name: Excludata
     runs-on: ubuntu-latest
-    env:
-      # use the "-v" argument only when running the workflow manually 
-      RYEBOT_DEBUG: ${{ github.event_name == 'workflow_dispatch' && '-v' || ' ' }}
     steps:
       - name: Setup Python
         uses: actions/setup-python@v4
@@ -30,7 +27,7 @@ jobs:
         run: pip install git+https://github.com/mQNwrK/ryebot.git@main
 
       - name: Run ryebot
-        run: python3 -m ryebot --github $RYEBOT_DEBUG excludata
+        run: python3 -m ryebot --github excludata
         env:
           RYEBOT_USERNAME: ${{ secrets.RYEBOT_WIKIGG_USERNAME }}
           RYEBOT_PASSWORD: ${{ secrets.RYEBOT_WIKIGG_PASSWORD }}
