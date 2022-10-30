@@ -1,11 +1,16 @@
 name: Update Module:Exclusive/data
 run-name: excludata ${{ github.run_id }}
 
-on:
-  workflow_dispatch:
-  schedule:
-    - cron: '5/10 * * * *'  # At every 10th minute from 5 through 59.
-    #- cron: '*/30 * * * *'  # At every 30th minute.
+# GitHub's "schedule" execution is very unreliable; it seems to trigger the workflow more or less randomly.
+# Therefore, we use an external scheduler: cron-job.org.
+# We configure it to invoke a workflow execution via the GitHub REST API as follows:
+#   URL: https://api.github.com/repos/qt-6/ryebot-ctrl/actions/workflows/excludata.yml/dispatches
+#   crontab ("every 10 minutes"): */10 * * * *
+#   header: Accept: application/vnd.github+json
+#   header: Authorization: Bearer <PAT>
+#   request method: POST
+# <PAT> is a GitHub Personal Access Token for this repository that only needs the "repo" scope.
+on: workflow_dispatch
 
 jobs:
   main:
