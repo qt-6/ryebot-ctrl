@@ -1,0 +1,33 @@
+name: Update Module:Language_info/data
+run-name: langinfodata ${{ github.run_id }}
+
+# GitHub's "schedule" execution is very unreliable; it seems to trigger the workflow more or less randomly.
+# Therefore, we use an external scheduler: cron-job.org.
+# We configure it to invoke a workflow execution via the GitHub REST API as follows:
+#   URL: https://api.github.com/repos/qt-6/ryebot-ctrl/actions/workflows/langinfodata.yml/dispatches
+#   crontab ("every hour at minute 30"): 30 * * * *
+#   header: Accept: application/vnd.github+json
+#   header: Authorization: Bearer <PAT>
+#   request method: POST
+#   request body: {"ref": "main"}
+# <PAT> is a GitHub Personal Access Token for this repository that only needs the "public_repo" scope.
+on: workflow_dispatch
+
+jobs:
+  main:
+    name: Langinfodata
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Setup ryebot
+        run: pip install git+https://github.com/mQNwrK/ryebot.git@main
+
+      - name: Run ryebot
+        run: python3 -m ryebot --github langinfodata
+        env:
+          RYEBOT_USERNAME: ${{ secrets.RYEBOT_WIKIGG_USERNAME }}
+          RYEBOT_PASSWORD: ${{ secrets.RYEBOT_WIKIGG_PASSWORD }}
