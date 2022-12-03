@@ -5,7 +5,7 @@ run-name: langinfodata ${{ github.run_id }}
 # Therefore, we use an external scheduler: cron-job.org.
 # We configure it to invoke a workflow execution via the GitHub REST API as follows:
 #   URL: https://api.github.com/repos/qt-6/ryebot-ctrl/actions/workflows/langinfodata.yml/dispatches
-#   crontab ("every hour at minute 30"): 30 * * * *
+#   crontab ("at minute 30 past every 2nd hour"): 30 */2 * * *
 #   header: Accept: application/vnd.github+json
 #   header: Authorization: Bearer <PAT>
 #   request method: POST
