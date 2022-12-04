@@ -1,0 +1,33 @@
+name: Update the versions of map viewers
+run-name: update_mapviewer_versions ${{ github.run_id }}
+
+# GitHub's "schedule" execution is very unreliable; it seems to trigger the workflow more or less randomly.
+# Therefore, we use an external scheduler: cron-job.org.
+# We configure it to invoke a workflow execution via the GitHub REST API as follows:
+#   URL: https://api.github.com/repos/qt-6/ryebot-ctrl/actions/workflows/update_mapviewer_versions.yml/dispatches
+#   crontab ("at 15:30 on Tue, Thu, and Sat"): 30 15 * * 2,4,6
+#   header: Accept: application/vnd.github+json
+#   header: Authorization: Bearer <PAT>
+#   request method: POST
+#   request body: {"ref": "main"}
+# <PAT> is a GitHub Personal Access Token for this repository that only needs the "public_repo" scope.
+on: workflow_dispatch
+
+jobs:
+  main:
+    name: Update_mapviewer_versions
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Setup ryebot
+        run: pip install git+https://github.com/mQNwrK/ryebot.git@main
+
+      - name: Run ryebot
+        run: python3 -m ryebot --github update_mapviewer_versions
+        env:
+          RYEBOT_USERNAME: ${{ secrets.RYEBOT_WIKIGG_USERNAME }}
+          RYEBOT_PASSWORD: ${{ secrets.RYEBOT_WIKIGG_PASSWORD }}
