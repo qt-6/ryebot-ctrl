@@ -1,0 +1,24 @@
+name: Update Module:Npcinfo/data
+run-name: npcinfodata ${{ github.run_id }}
+
+on:
+  workflow_dispatch:
+
+jobs:
+  main:
+    name: Npcinfodata
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Setup ryebot
+        run: pip install git+https://github.com/mQNwrK/ryebot.git@main
+
+      - name: Run ryebot
+        run: python3 -m ryebot --github update_npcinfo
+        env:
+          RYEBOT_USERNAME: ${{ secrets.RYEBOT_WIKIGG_USERNAME }}
+          RYEBOT_PASSWORD: ${{ secrets.RYEBOT_WIKIGG_PASSWORD }}
