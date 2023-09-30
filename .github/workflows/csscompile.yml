@@ -1,0 +1,43 @@
+name: Re-compile wiki CSS
+run-name: csscompile ${{ github.run_id }}
+
+on:
+  workflow_dispatch:
+
+jobs:
+  main:
+    name: Csscompile
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Setup ryebot
+        run: pip install git+https://github.com/mQNwrK/ryebot.git@main
+
+      - name: Install Sass
+        run: |
+          url=https://github.com/sass/dart-sass/releases/download/1.67.0/dart-sass-1.67.0-linux-x64.tar.gz
+
+          curl -L -o sass.tar.gz "$url"
+          tar -xf sass.tar.gz
+          rm sass.tar.gz
+
+          using_version=$(dart-sass/sass --version)
+          latest_version=$(curl -L -s \
+            -H "Accept: application/vnd.github+json" \
+            -H "X-GitHub-Api-Version: 2022-11-28" \
+            https://api.github.com/repos/sass/dart-sass/releases/latest \
+            | jq -r '.tag_name')
+          if [ "$latest_version" != "$using_version" ]; then
+            echo "::warning title=Using outdated Sass version::The most recent Dart Sass version available is $latest_version, but only $using_version is installed. Consider updating the script to use the newest version."
+          fi
+          echo "Installed Dart Sass $using_version."
+
+      - name: Run ryebot
+        run: python3 -m ryebot --github csscompile
+        env:
+          RYEBOT_USERNAME: ${{ secrets.RYEBOT_WIKIGG_USERNAME }}
+          RYEBOT_PASSWORD: ${{ secrets.RYEBOT_WIKIGG_PASSWORD }}
