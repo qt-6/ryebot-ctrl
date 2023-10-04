@@ -1,0 +1,14 @@
+name: Access request
+description: Request "Collaborator" access to manually start scripts
+title: Access request
+assignees:
+  - qt-6
+body:
+  - type: input
+    id: username
+    attributes:
+      label: Wiki account name
+      description: What is your account name on the wiki?
+      placeholder: Your wiki account name
+    validations:
+      required: true
