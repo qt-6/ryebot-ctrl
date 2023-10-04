@@ -8,6 +8,7 @@ run-name: excludata ${{ github.run_id }}
 #   crontab ("every 10 minutes"): */10 * * * *
 #   header: Accept: application/vnd.github+json
 #   header: Authorization: Bearer <PAT>
+#   header: X-GitHub-Api-Version: 2022-11-28
 #   request method: POST
 #   request body: {"ref": "main"}
 # <PAT> is a GitHub Personal Access Token for this repository that only needs the "public_repo" scope.

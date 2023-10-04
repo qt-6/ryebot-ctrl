@@ -8,6 +8,7 @@ run-name: update_mapviewer_versions ${{ github.run_id }}
 #   crontab ("at 15:30 on Tue, Thu, and Sat"): 30 15 * * 2,4,6
 #   header: Accept: application/vnd.github+json
 #   header: Authorization: Bearer <PAT>
+#   header: X-GitHub-Api-Version: 2022-11-28
 #   request method: POST
 #   request body: {"ref": "main"}
 # <PAT> is a GitHub Personal Access Token for this repository that only needs the "public_repo" scope.
