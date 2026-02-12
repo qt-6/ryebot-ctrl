@@ -19,7 +19,8 @@ jobs:
 
       - name: Install Sass
         run: |
-          url=https://github.com/sass/dart-sass/releases/download/1.92.0/dart-sass-1.92.0-linux-x64.tar.gz
+          version=1.97.3
+          url=https://github.com/sass/dart-sass/releases/download/$version/dart-sass-$version-linux-x64.tar.gz
 
           curl -L -o sass.tar.gz "$url"
           tar -xf sass.tar.gz
